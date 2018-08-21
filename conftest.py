@@ -1,6 +1,7 @@
 
 import pytest
 from fixture.application import Application
+from fixture.project import ProjectHelper
 import json
 import os.path
 
@@ -22,8 +23,9 @@ def app(request):
     global fixture
     browser = request.config.getoption("--browser")
     web_config = load_config(request.config.getoption("--target"))['web']
+    project = ProjectHelper(app)
     if fixture is None or not fixture.is_valid():
-        fixture = Application(browser=browser, base_url=web_config["baseUrl"])
+        fixture = Application(browser=browser, base_url=web_config["baseUrl"], project=project)
     return fixture
 
 @pytest.fixture(scope="session", autouse=True)

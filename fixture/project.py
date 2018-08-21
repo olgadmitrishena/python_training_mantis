@@ -1,6 +1,5 @@
 from model.project import Project
 
-
 class ProjectHelper:
 
 
@@ -38,7 +37,7 @@ class ProjectHelper:
         wd.find_element_by_xpath("//input[@value='Create New Project']").click()
 
 
-    def get_projects_list(self):
+    def get_project_list(self):
         wd = self.app.wd
         self.open_projects_page()
         project_cache = []
