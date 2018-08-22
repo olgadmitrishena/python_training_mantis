@@ -9,4 +9,4 @@ def test_add_project(app):
     app.project.create_project(Project(name='x', description="x"))
     new_projects = app.project.get_project_list()
     assert len(old_projects) + 1 == len(new_projects)
-    assert sorted(old_projects, key=lambda p: p.id) == sorted(new_projects, key=lambda p: p.id)
+    assert sorted(old_projects, key=lambda p: p.name) == sorted(new_projects, key=lambda p: p.name)
