@@ -1,10 +1,10 @@
 from model.project import Project
 
+
 class ProjectHelper:
 
     def __init__(self, app):
         self.app = app
-
 
     def open_project_page(self):
         wd = self.app.wd
@@ -37,24 +37,29 @@ class ProjectHelper:
         self.return_home()
         wd.find_element_by_link_text("%s" % project.name).click()
         # submit delete
-        wd.find_element_by_link_text("Delete").click()
+        wd.find_element_by_link_text("Delete Project").click()
+        wd.find_element_by_link_text("Delete Project").click()
         self.return_home()
         self.project_cache = None
 
     def return_home(self):
         wd = self.app.wd
-        if not wd.current_url.endswith("//manage_mantisbt-1.2.20/login_page.php"):
+        if not wd.current_url.endswith("//manage_proj_page.php"):
             wd.find_element_by_link_text("Manage").click()
             wd.find_element_by_link_text("Manage Projects").click()
     project_cache = None
 
+
     def get_project_list(self):
-        if self.project_cache is None:
-            wd = self.app.wd
-            self.return_home()
-            self.project_cache = []
-            for table in wd.find_elements_by_css_selector('tr'):
-                element = table.find_elements_by_css_selector('td')
-                text1 = element[0].text
-                self.project_cache.append(Project(name=text1))
-        return list(self.project_cache)
+        wd = self.app.wd
+        self.open_project_page()
+        project_cache = []
+        for row in wd.find_elements_by_css_selector("table.width100 tr.row-1"):
+            cells = row.find_elements_by_css_selector("td")
+            name = cells[0].text
+            project_cache.append(Project(name=name))
+        for row in wd.find_elements_by_css_selector("table.width100 tr.row-2"):
+            cells = row.find_elements_by_css_selector("td")
+            name = cells[0].text
+            project_cache.append(Project(name=name))
+        return list(project_cache)
