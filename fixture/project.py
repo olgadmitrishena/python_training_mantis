@@ -38,7 +38,6 @@ class ProjectHelper:
         wd.find_element_by_link_text("%s" % project.name).click()
         # submit delete
         wd.find_element_by_link_text("Delete Project").click()
-        wd.find_element_by_link_text("Delete Project").click()
         self.return_home()
         self.project_cache = None
 
